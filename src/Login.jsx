@@ -8,8 +8,17 @@ const Login = () => {
   const handleClick = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        console.log(res, "userdata");
-        navigate("/dashb");
+        console.log(res.user, "userdata");
+        // navigate("/dashb");
+        const userData = {
+          username: res.user.displayName,
+          email: res.user.email,
+          mobileNumber: res.user.phoneNumber,  // You may get mobile number from the authentication provider
+          profileImage: res.user.photoURL,
+        };
+  
+        // Pass user information as state
+        navigate("/dashb", { state: { user: userData } });
       })
       .catch((err) => {
         console.log(err);
